@@ -4,8 +4,8 @@ import { toast } from "react-toastify"
 import {jwtDecode} from "jwt-decode"
 
 // Import services
-import { login, logout, removeTokens, setAccessToken, setRefreshToken } from "../../../services/api-user-service";
-import { IUserLogin } from "../../../types/user";
+import { login, logout, register, removeTokens, setAccessToken, setRefreshToken } from "../../../services/api-user-service";
+import { IUserLogin, IUserRegister } from "../../../types/user";
 
 export const LoginUser = (user : IUserLogin) => {
     return async(dispatch: Dispatch<UserActions>) => {
@@ -25,8 +25,8 @@ export const LoginUser = (user : IUserLogin) => {
                const decodedToken = jwtDecode(accessToken) as any;
                dispatch(
                 {
-                    type: UserActionTypes.LOGIN_USER, 
-                    payload: {message, decodedToken}}
+                  type: UserActionTypes.LOGIN_USER, 
+                  payload: {message, decodedToken}}
                 )
             }
          }
@@ -34,6 +34,30 @@ export const LoginUser = (user : IUserLogin) => {
             dispatch({type: UserActionTypes.SERVER_ERROR, payload: "Unknown error!"})
         }
     }
+}
+
+export const RegisterUser = (user : IUserRegister) => {
+  return async(dispatch: Dispatch<UserActions>) => {
+       try{
+          const data = await register(user);
+          const { response } = data;
+         
+          if(!response.success){
+             toast.error(response.message)
+          }
+          else{
+             toast.success(response.message)
+             dispatch(
+              {
+                type: UserActionTypes.REGISTER_USER, 
+                payload: response.payload
+              })
+          }
+       }
+       catch(e){
+          dispatch({type: UserActionTypes.SERVER_ERROR, payload: "Unknown error!"})
+      }
+  }
 }
 
 export const LogOut = (id: string) => {

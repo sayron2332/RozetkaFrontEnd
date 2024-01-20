@@ -21,6 +21,7 @@ const UserReducer = (state = initialState, action: UserActions): UserState => {
         user: action.payload.decodedToken,
         message: action.payload.message,
       };
+      
     case UserActionTypes.LOGOUT_USER:
       return {
         user: {},
@@ -34,6 +35,16 @@ const UserReducer = (state = initialState, action: UserActions): UserState => {
     case UserActionTypes.SERVER_ERROR:
         return { ...state, loading: false };
 
+    case UserActionTypes.REGISTER_USER:
+      return {
+        user: {},
+        message: action.payload.message,
+        loading: false,
+        error: null,
+        isAuth: false,
+        selectedUser: null,
+        allUsers: [],
+       };
     default:
       return state;
   }

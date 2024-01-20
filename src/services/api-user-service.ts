@@ -1,4 +1,5 @@
 import axios from "axios"
+import { IUserLogin, IUserRegister } from "../types/user";
 
 const instance = axios.create({
     baseURL: "https://localhost:7053/api/User",
@@ -76,14 +77,14 @@ const requests = {
 }
 
 const User = {
-    login: (user: any) => requests.post(`/login`, user),
+    login: (user: IUserLogin) => requests.post(`/login`, user),
+    register: (user: IUserRegister) => requests.post(`/register`, user),
     logout: (userId: string) => requests.get(`/logout?userId=` + userId)
 }
 
-export async function login(user: any){
+export async function login(user: IUserLogin){
     const data = await User.login(user)
     .then((response) => {
-        console.log("response"+ response)
         return {
             
             response
@@ -93,6 +94,20 @@ export async function login(user: any){
         return error.response
     } )
     return data
+}
+
+export async function register(user: IUserRegister){
+  const data = await User.register(user)
+  .then((response) => {
+      return {
+          
+          response
+      }
+  })
+  .catch((error) => {
+      return error.response
+  } )
+  return data
 }
 
 export async function logout(userId: string){
