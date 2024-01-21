@@ -79,7 +79,7 @@ const requests = {
 const User = {
     login: (user: IUserLogin) => requests.post(`/login`, user),
     register: (user: IUserRegister) => requests.post(`/register`, user),
-    logout: (userId: string) => requests.get(`/logout?userId=` + userId)
+    logout: () => requests.get(`/logout`)
 }
 
 export async function login(user: IUserLogin){
@@ -110,8 +110,8 @@ export async function register(user: IUserRegister){
   return data
 }
 
-export async function logout(userId: string){
-    const data = await User.logout(userId)
+export async function logout(){
+    const data = await User.logout()
     .then((response) => {
         return {
             response

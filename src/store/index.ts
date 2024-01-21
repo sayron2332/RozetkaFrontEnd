@@ -4,7 +4,7 @@ import UserReducer from "./reducers/userReducer";
 
 
 export const rootReducer = combineReducers({
-    auth: UserReducer
+    UserReducer
 });
 
 export const store = configureStore({

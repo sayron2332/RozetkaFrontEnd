@@ -60,15 +60,17 @@ export const RegisterUser = (user : IUserRegister) => {
   }
 }
 
-export const LogOut = (id: string) => {
-   return async (dispatch: Dispatch<UserActions>) => {
-     const data = await logout(id);
+export const LogOut = () => {
+     return async (dispatch: Dispatch<UserActions>) => {
+     const data = await logout();
      console.log("LogOut " + data)
      const { response } = data;
      if (response.success) {
+       toast.success(response.message)
        removeTokens();
        dispatch({
          type: UserActionTypes.LOGOUT_USER,
+         payload: {response}
        });
      }
    };

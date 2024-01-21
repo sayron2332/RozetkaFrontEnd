@@ -9,7 +9,8 @@ export interface IUserRegister
 {
     firstName: string,
     lastName: string,
-    phoneNumber:string
+    phoneNumber: string | null
     email: string,
     password: string,
+    image: File | null
 }

@@ -4,7 +4,7 @@ import "./index.css"
 import { NavLink } from 'react-router-dom';
 import { useActions } from '../../hooks/useActions';
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
   
 const SignIn = () => {

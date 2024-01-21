@@ -24,8 +24,9 @@ const UserReducer = (state = initialState, action: UserActions): UserState => {
       
     case UserActionTypes.LOGOUT_USER:
       return {
+        ...state,
         user: {},
-        message: null,
+        message: action.payload.message,
         loading: false,
         error: null,
         isAuth: false,

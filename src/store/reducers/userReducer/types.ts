@@ -17,6 +17,7 @@ export enum UserActionTypes {
 
 interface LogoutUserAction {
     type: UserActionTypes.LOGOUT_USER;
+    payload: any
 }
   
 interface LoginUserAction{
@@ -24,9 +25,6 @@ interface LoginUserAction{
     payload: any
 }
 
-interface LogoutUserAction {
-    type: UserActionTypes.LOGOUT_USER;
-}
 
 interface RegisterUserAction {
     type: UserActionTypes.REGISTER_USER;

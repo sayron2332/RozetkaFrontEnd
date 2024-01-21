@@ -1,9 +1,11 @@
 import React from 'react';
 import type { MenuProps } from 'antd';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Layout, Menu, theme } from 'antd';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { Footer } from 'antd/es/layout/layout';
-import "./index.css"
+
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { useActions } from '../../hooks/useActions';
 const { Header, Content, Sider } = Layout;
 
 const navItems: MenuProps['items'] = [].map((key) => ({
@@ -11,18 +13,7 @@ const navItems: MenuProps['items'] = [].map((key) => ({
   label: `nav ${key}`,
 }));
 
-navItems.push(
-    {
-        key: '1',
-        label: <NavLink to='/'>Головна</NavLink> 
-    }
-)
-navItems.push(
-    {
-        key: '2',
-        label: <NavLink to='/login'>Увійти</NavLink> 
-    }
-)
+
 
 const sideItems: MenuProps['items'] = [].map((key) => ({
     key,
@@ -38,6 +29,39 @@ const sideItems: MenuProps['items'] = [].map((key) => ({
   );
 
 const DefaultLayout: React.FC = () => {
+
+  navItems.push(
+       {
+           key: '1',
+           label: <NavLink to='/'>Головна</NavLink> 
+       }
+    )
+
+   const {LogOut} = useActions()
+   const { isAuth } = useTypedSelector((store) => store.UserReducer);
+   const navigate = useNavigate();
+  if(isAuth){
+    navItems.push(
+    {
+        key: '2',
+        label: "Вийти",
+        onClick: () => {
+          LogOut()
+          navigate("/");
+        }
+    }
+  )
+  }
+  else{
+    navItems.push(
+      {
+          key: '2',
+          label: <NavLink to='/login'>Увійти</NavLink> 
+      }
+    )
+  }
+
+  
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();

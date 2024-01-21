@@ -1,15 +1,14 @@
 import {Button, Divider, Form, Input, message, Upload, UploadFile, UploadProps} from "antd";
 import {useState} from "react";
 import {RcFile, UploadChangeParam} from "antd/es/upload";
-import {LoadingOutlined, PlusOutlined} from '@ant-design/icons';
-import {IUserRegister} from "../../types/user";
-import { useActions } from "../../hooks/useActions";
-
+import { PlusOutlined} from '@ant-design/icons';
+import {IUserRegister} from "../../../types/user";
+import { useActions } from "../../../hooks/useActions";
 
 const RegisterPage = () => {
-
-    const {RegisterUser} = useActions() 
+    const {RegisterUser} = useActions()
     const [file, setFile] = useState<File | null>(null);
+ 
     const onSubmit = async (values: any) => {
        
         const model : IUserRegister = {
@@ -19,11 +18,8 @@ const RegisterPage = () => {
             lastName: values.lastName,
             phoneNumber: values.phone,
             password: values.password,
-          
         };
-        console.log(model)
-        RegisterUser(model);
-      
+        RegisterUser(model)
     }
     const onSubmitFailed = (errorInfo: any) => {
         console.log("Error Form data", errorInfo);
@@ -118,7 +114,15 @@ const RegisterPage = () => {
                 </Form.Item>
 
 
-                
+                <Form.Item<FieldType>
+                    label="Підтвердіть пароль"
+                    name="password_confirmation"
+                    rules={[{required: true, message: 'Вкажіть пароль'}]}
+                >
+                    <Input/>
+                </Form.Item>
+
+
                 <Form.Item label="Image">
                     <Upload
                         name="avatar"
